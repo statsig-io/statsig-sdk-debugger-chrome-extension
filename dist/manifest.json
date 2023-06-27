@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "Statsig SDK Debugger Extension",
+  "description": "Allows developers to see SDK state for the current user.",
+  "version": "1.0.0",
+  "icons": {
+    "16": "images/icon_active-16.png",
+    "32": "images/icon_active-32.png",
+    "48": "images/icon_active-48.png",
+    "128": "images/icon_active-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon_active-16.png",
+      "32": "images/icon_active-32.png",
+      "48": "images/icon_active-48.png",
+      "128": "images/icon_active-128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/vendor.js",
+        "js/content_script.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/images/*",
+        "images/*",
+        "js/inject.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}
