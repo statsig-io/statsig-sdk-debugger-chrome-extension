@@ -20,6 +20,8 @@ or
 ![install-steps](https://user-images.githubusercontent.com/95646168/227806277-213caaa0-6235-48d1-9993-b98de670e1aa.png)
 
 Once installed, you should see the Statsig icon in your Chrome toolbar (You may want to pin it)
-![Screenshot 2023-03-26 at 3 25 14 PM](https://user-images.githubusercontent.com/95646168/227808516-6adb212c-dce5-472a-b6fb-85e3a67c5b45.png)
+
+![pinned-extension](https://github.com/statsig-io/statsig-sdk-debugger-chrome-extension/assets/95646168/afb52870-3e29-4bc8-bf22-5502aeff89ab)
+
 
 Note: Full installation instructions can be found at https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked
