@@ -12,7 +12,12 @@ if (!instance) {
   instance = theWindow.__STATSIG_SDK__?.instance;
 }
 if (!instance) {
-  instance = theWindow.__STATSIG__?.instance();
+  if (Object.keys(theWindow.__STATSIG__?.instances).length > 1) {
+    const instanceKey = window.prompt("Multiple sdk instances found. Please enter the sdk key for the instance you are debugging for: (if left blank, will use the first instance)");
+    instance = theWindow.__STATSIG__?.instance(instanceKey);
+  } else {
+    instance = theWindow.__STATSIG__?.instance();
+  }
   new_js_sdk = true;
 }
 
