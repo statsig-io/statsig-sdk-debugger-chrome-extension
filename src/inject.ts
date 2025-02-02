@@ -5,7 +5,7 @@ const extensionID = script?.getAttribute("data-id") ?? "";
 
 const theWindow = window as any;
 
-let new_js_sdk = false;
+let isJsMonoClient = false;
 
 let instance = theWindow.__STATSIG_JS_SDK__?.instance;
 if (!instance) {
@@ -18,31 +18,19 @@ if (!instance) {
   } else {
     instance = theWindow.__STATSIG__?.instance();
   }
-  new_js_sdk = true;
+  instance && (isJsMonoClient = true);
 }
 
 if (!instance) {
   alert("Error: Unable to find Statsig SDK");
 } else {
   const input = document.createElement("input");
-  input.value = getValues();
+  input.value = JSON.stringify({
+    sdkKey: isJsMonoClient ? instance._sdkKey : instance.sdkKey,
+    userValues: isJsMonoClient ? instance._store._values : instance.store.userValues,
+    user: isJsMonoClient ? instance._user : instance.identity.user,
+  });
   input.id = "statsig-debugger-data";
   input.type = "hidden";
   document.body.appendChild(input);
-}
-
-function getValues() {
-  if (new_js_sdk) {
-    return JSON.stringify({
-      sdkKey: instance._sdkKey,
-      userValues: instance._store._values,
-      user: instance._user,
-    });
-  } else {
-    return JSON.stringify({
-      sdkKey: instance.sdkKey,
-      userValues: instance.store.userValues,
-      user: instance.identity.user,
-    });
-  }
 }
