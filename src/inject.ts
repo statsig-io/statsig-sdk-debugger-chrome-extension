@@ -12,12 +12,43 @@ if (!instance) {
   instance = theWindow.__STATSIG_SDK__?.instance;
 }
 if (!instance) {
-  if (Object.keys(theWindow.__STATSIG__?.instances).length > 1) {
-    const instanceKey = window.prompt("Multiple sdk instances found. Please enter the sdk key for the instance you are debugging for: (if left blank, will use the first instance)");
-    instance = theWindow.__STATSIG__?.instance(instanceKey);
+  const instances = theWindow.__STATSIG__?.instances;
+
+  if (instances && Object.keys(instances).length > 1) {
+    const keys = Object.keys(instances);
+    
+    let message = "Multiple SDK instances found. Select an instance:\n\n";
+    keys.forEach((key, index) => {
+      message += `${index + 1}: ${key.slice(0,15)}...\n`;
+    });
+
+    message += "\nEnter the number of the instance you want to use, or leave blank to use the first one:";
+
+    let selectedKey = null;
+    
+    while (!selectedKey) {
+      const input = prompt(message)?.trim();
+      
+      if (input === null || input === "" || input === undefined) {
+        selectedKey = keys[0];
+        break;
+      }
+
+      const index = parseInt(input, 10) - 1;
+      if (index >= 0 && index < keys.length) {
+        if (window.confirm(`Confirm selection: ${keys[index].slice(0,15)}...?`)) {
+          selectedKey = keys[index];
+        }
+      } else {
+        alert("Invalid selection. Please enter a valid number.");
+      }
+    }
+
+    instance = theWindow.__STATSIG__?.instance(selectedKey);
   } else {
     instance = theWindow.__STATSIG__?.instance();
   }
+
   instance && (isJsMonoClient = true);
 }
 
