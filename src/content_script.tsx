@@ -30,8 +30,6 @@ function extractAndOpen(attempt: number) {
         user: Record<string, unknown>;
       } = JSON.parse(input.value);
       input.remove();
-      console.log("Extracted Data", data);
-
       const debugID = (Math.random() + 1).toString(36).substring(2);
 
       chrome.storage.local
