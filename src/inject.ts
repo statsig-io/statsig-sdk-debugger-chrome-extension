@@ -22,7 +22,7 @@ if (!instance) {
   const input = document.createElement("input");
   input.value = JSON.stringify({
     sdkKey: isJsMonoClient ? instance._sdkKey : instance.sdkKey,
-    userValues: isJsMonoClient ? instance._store._values : instance.store.userValues,
+    userValues: isJsMonoClient ? instance._store._values._values : instance.store.userValues,
     user: isJsMonoClient ? instance._user : instance.identity.user,
   });
   input.id = "statsig-debugger-data";
