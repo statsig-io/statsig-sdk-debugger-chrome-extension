@@ -1,7 +1,7 @@
-console.log('inject.ts', chrome);
+console.log("inject.ts", chrome);
 
-const script = document.querySelector('#statsig-debugger-injected');
-const extensionID = script?.getAttribute('data-id') ?? '';
+const script = document.querySelector("#statsig-debugger-injected");
+const extensionID = script?.getAttribute("data-id") ?? "";
 
 const theWindow = window as any;
 
@@ -17,9 +17,9 @@ if (!instance && theWindow.__STATSIG__?.instances) {
 }
 
 if (!instance) {
-  alert('Error: Unable to find Statsig SDK');
+  alert("Error: Unable to find Statsig SDK");
 } else {
-  const input = document.createElement('input');
+  const input = document.createElement("input");
   input.value = JSON.stringify({
     sdkKey: isJsMonoClient ? instance._sdkKey : instance.sdkKey,
     userValues: isJsMonoClient
@@ -27,8 +27,8 @@ if (!instance) {
       : instance.store.userValues,
     user: isJsMonoClient ? instance._user : instance.identity.user,
   });
-  input.id = 'statsig-debugger-data';
-  input.type = 'hidden';
+  input.id = "statsig-debugger-data";
+  input.type = "hidden";
   document.body.appendChild(input);
 }
 
@@ -40,13 +40,13 @@ function attemptToSelectJsMonoInstances() {
     return theWindow.__STATSIG__?.instance();
   }
 
-  let message = 'Multiple SDK instances found. Select an instance:\n\n';
+  let message = "Multiple SDK instances found. Select an instance:\n\n";
   keys.forEach((key, index) => {
     message += `${index + 1}: ${key.slice(0, 15)}...\n`;
   });
 
   message +=
-    '\nEnter the number of the instance you want to use, or leave blank to use the first one:';
+    "\nEnter the number of the instance you want to use, or leave blank to use the first one:";
 
   let selectedKey = null;
 
@@ -63,7 +63,7 @@ function attemptToSelectJsMonoInstances() {
     ) {
       selectedKey = keys[index];
     } else {
-      alert('Invalid selection. Defaulting to the first sdk Instance.');
+      alert("Invalid selection. Defaulting to the first sdk Instance.");
       selectedKey = keys[0];
     }
   }
