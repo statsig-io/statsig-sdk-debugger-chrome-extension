@@ -22,7 +22,9 @@ if (!instance) {
   const input = document.createElement("input");
   input.value = JSON.stringify({
     sdkKey: isJsMonoClient ? instance._sdkKey : instance.sdkKey,
-    userValues: isJsMonoClient ? instance._store._values : instance.store.userValues,
+    userValues: isJsMonoClient
+      ? instance._store._values ?? instance._store._values._values
+      : instance.store.userValues,
     user: isJsMonoClient ? instance._user : instance.identity.user,
   });
   input.id = "statsig-debugger-data";
@@ -40,20 +42,25 @@ function attemptToSelectJsMonoInstances() {
 
   let message = "Multiple SDK instances found. Select an instance:\n\n";
   keys.forEach((key, index) => {
-    message += `${index + 1}: ${key.slice(0,15)}...\n`;
+    message += `${index + 1}: ${key.slice(0, 15)}...\n`;
   });
 
-  message += "\nEnter the number of the instance you want to use, or leave blank to use the first one:";
+  message +=
+    "\nEnter the number of the instance you want to use, or leave blank to use the first one:";
 
   let selectedKey = null;
-    
+
   const input = prompt(message)?.trim();
 
   if (!input) {
     selectedKey = keys[0];
   } else {
     const index = parseInt(input, 10) - 1;
-    if (index >= 0 && index < keys.length && window.confirm(`Confirm selection: ${keys[index].slice(0, 15)}...?`)) {
+    if (
+      index >= 0 &&
+      index < keys.length &&
+      window.confirm(`Confirm selection: ${keys[index].slice(0, 15)}...?`)
+    ) {
       selectedKey = keys[index];
     } else {
       alert("Invalid selection. Defaulting to the first sdk Instance.");
