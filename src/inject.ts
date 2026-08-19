@@ -1,3 +1,5 @@
+import { extractSdkState } from "./sdkState";
+
 console.log("inject.ts", chrome);
 
 const script = document.querySelector("#statsig-debugger-injected");
@@ -20,13 +22,7 @@ if (!instance) {
   alert("Error: Unable to find Statsig SDK");
 } else {
   const input = document.createElement("input");
-  input.value = JSON.stringify({
-    sdkKey: isJsMonoClient ? instance._sdkKey : instance.sdkKey,
-    userValues: isJsMonoClient
-      ? instance._store._values ?? instance._store._values._values
-      : instance.store.userValues,
-    user: isJsMonoClient ? instance._user : instance.identity.user,
-  });
+  input.value = JSON.stringify(extractSdkState(instance, isJsMonoClient));
   input.id = "statsig-debugger-data";
   input.type = "hidden";
   document.body.appendChild(input);

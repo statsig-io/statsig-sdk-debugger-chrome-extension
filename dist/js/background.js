@@ -1,1 +1,1 @@
-(()=>{"use strict";console.log("background",chrome),chrome.action.onClicked.addListener((e=>{if(!e.active||!e.id)throw new Error("Failed to get active tab ID.");chrome.tabs.sendMessage(e.id,{action:"open_debugger"})}))})();
+(()=>{"use strict";console.log("background",chrome),chrome.action.onClicked.addListener(e=>{if(!e.active||!e.id)throw new Error("Failed to get active tab ID.");chrome.tabs.sendMessage(e.id,{action:"open_debugger"})})})();
